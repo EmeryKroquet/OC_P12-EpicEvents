@@ -5,4 +5,5 @@ lib
 .envrc
 venv
 .idea
+sql-commande.txt
 __pycache__

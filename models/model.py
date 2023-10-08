@@ -4,11 +4,16 @@ from sqlalchemy.sql import func
 
 Base = declarative_base()
 
+"""
+Session = sessionmaker(bind=engine)
+
 database_url = 'mysql+pymysql://root:Macpro-emery@@localhost/epicevent'
 
 engine = create_engine(database_url)
 Session = sessionmaker(bind=engine)
-session = Session()
+session = Session()"""
+
+
 class Client(Base):
     __tablename__ = 'client'
 
@@ -18,7 +23,7 @@ class Client(Base):
     telephone = Column(String(15), nullable=False)
     nom_entreprise = Column(String(100), nullable=False)
     date_creation = Column(DateTime, default=func.now(), nullable=False)
-    last_update = Column(DateTime, onupdate=func.now(), nullable=False)
+    last_update = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
     contact_commercial = Column(String(100), nullable=False)
 
     contracts = relationship('Contract', back_populates='client')
@@ -88,6 +93,7 @@ class CustomUser(Base):
                 f" first_name='{self.first_name}',"
                 f" last_name='{self.last_name}',"
                 f" department='{self.department}')")
+
 class Event(Base):
     __tablename__ = 'event'
 

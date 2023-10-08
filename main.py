@@ -3,13 +3,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from controllers.controller import CRMController
-from views.view import CRMView
+
+
+"""
+Session = sessionmaker(bind=engine)
 
 database_url = 'mysql+pymysql://root:Macpro-emery@@localhost/epicevent'
 
 engine = create_engine(database_url)
 Session = sessionmaker(bind=engine)
-session = Session()
+session = Session()"""
+
 
 
 def main():

@@ -1,24 +1,25 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, session
+from database import session
+#from sqlalchemy.orm import session
 from models.model import Client, Contract, Event
-from database import engine
 
+"""
 Session = sessionmaker(bind=engine)
 
 database_url = 'mysql+pymysql://root:Macpro-emery@@localhost/epicevent'
 
 engine = create_engine(database_url)
 Session = sessionmaker(bind=engine)
-session = Session()
+session = Session()"""
+
 class CRMController:
     def __init__(self):
-        self.session = Session()
+        self.session = session
 
     def add_client(self, nom_complet, email, telephone, nom_entreprise, contact_commercial):
         new_client = Client(nom_complet=nom_complet, email=email, telephone=telephone,
                             nom_entreprise=nom_entreprise, contact_commercial=contact_commercial)
-        self.session.add(new_client)
-        self.session.commit()
+        self.session.add(new_client)  # Utilisez la session importée pour ajouter un client
+        self.session.commit()  # Committez les modifications pour les enregistrer dans la base de données
         print("Client ajouté avec succès.")
 
     def get_all_clients(self):
