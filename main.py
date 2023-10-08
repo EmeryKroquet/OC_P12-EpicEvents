@@ -21,32 +21,27 @@ def main():
         choix = view.get_user_choice()
 
         if choix == "1":
-            # Menu de gestion des clients
-            while True:
-                view.display_clients(controller.get_all_clients())
-                choix_client = view.get_user_choice()
+            nom_complet, email, telephone, nom_entreprise, contact_commercial = view.get_client_details()
+            controller.add_client(nom_complet, email, telephone, nom_entreprise, contact_commercial)
+        elif choix == "2":
+            contracts = controller.get_all_contracts()
+            view.display_contracts(contracts)
+        elif choix == "3":
+            custom_groups = controller.get_all_custom_groups()
+            view.display_custom_groups(custom_groups)
+        elif choix == "4":
+            custom_users = controller.get_all_custom_users()
+            view.display_custom_users(custom_users)
+        elif choix == "5":
+            events = controller.get_all_events()
+            view.display_events(events)
+        elif choix == "6":
+            view.display_message("Merci d'avoir utilisé votre CRM. Au revoir !")
+            break
+        else:
+            view.display_message("Option invalide. Veuillez choisir une option valide.")
+"""
 
-                if choix_client == "1":
-                    nom_complet, email, telephone, nom_entreprise, contact_commercial = view.get_client_details()
-                    controller.add_client(nom_complet, email, telephone, nom_entreprise, contact_commercial)
-                elif choix_client == "2":
-                    clients = controller.get_all_clients()
-                    view.display_clients(clients)
-                elif choix_client == "3":
-                    nom_recherche = input("Nom du client à rechercher : ")
-                    clients = controller.search_client_by_name(nom_recherche)
-                    view.display_clients(clients)
-                elif choix_client == "4":
-                    client_id = view.get_client_id()
-                    new_email = view.get_new_email()
-                    controller.update_client_email(int(client_id), new_email)
-                elif choix_client == "5":
-                    client_id = view.get_client_id()
-                    controller.delete_client(int(client_id))
-                elif choix_client == "6":
-                    break
-                else:
-                    view.display_message("Option invalide. Veuillez choisir une option valide.")
         elif choix == "2":
             view.display_message("Fonctionnalité non implémentée.")
         elif choix == "3":
@@ -55,7 +50,7 @@ def main():
             view.display_message("Merci d'avoir utilisé votre CRM. Au revoir !")
             break
         else:
-            view.display_message("Option invalide. Veuillez choisir une option valide.")
+            view.display_message("Option invalide. Veuillez choisir une option valide.") """
 
 if __name__ == "__main__":
     main()

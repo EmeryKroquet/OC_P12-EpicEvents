@@ -39,3 +39,33 @@ class CRMView:
     @staticmethod
     def display_message(message):
         print(message)
+
+    @staticmethod
+    def display_contracts(contracts):
+        for contract in contracts:
+            print(
+                f"ID Contrat: {contract.identifiant_unique},"
+                f" ID Client: {contract.client_id},"
+                f" Montant Total: {contract.montant_total}")
+
+    @staticmethod
+    def display_custom_groups(groups):
+        for group in groups:
+            print(f"ID Groupe: {group.id},"
+                  f" Nom: {group.name}")
+
+    @staticmethod
+    def display_custom_users(users):
+        for user in users:
+            print(f"ID Utilisateur: {user.id},"
+                  f" Nom d'utilisateur: {user.username},"
+                  f" Email: {user.email}")
+
+    @staticmethod
+    def display_events(events):
+        for event in events:
+            print(
+                f"ID Événement: {event.event_id},"
+                f" ID Contrat: {event.contract_id},"
+                f" Nom Client: {event.client_name},"
+                f" Date Début: {event.event_date_start}")
