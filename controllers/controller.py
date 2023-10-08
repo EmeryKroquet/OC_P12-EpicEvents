@@ -2,15 +2,6 @@ from database import session
 #from sqlalchemy.orm import session
 from models.model import Client, Contract, Event
 
-"""
-Session = sessionmaker(bind=engine)
-
-database_url = 'mysql+pymysql://root:Macpro-emery@@localhost/epicevent'
-
-engine = create_engine(database_url)
-Session = sessionmaker(bind=engine)
-session = Session()"""
-
 class CRMController:
     def __init__(self):
         self.session = session

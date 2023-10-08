@@ -1,26 +1,14 @@
 # Point d'entrée principal de l'application
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
 from controllers.controller import CRMController
-
-
-"""
-Session = sessionmaker(bind=engine)
-
-database_url = 'mysql+pymysql://root:Macpro-emery@@localhost/epicevent'
-
-engine = create_engine(database_url)
-Session = sessionmaker(bind=engine)
-session = Session()"""
-
-
 
 def main():
     # Instanciez le contrôleur
     controller = CRMController()
 
     while True:
+        print("\n================================================")
+        print("Bienvenue dans notre application CRM")
+        print("\n================================================")
         print("1. Gérer les clients")
         print("2. Gérer les contrats")
         print("3. Gérer les événements")
