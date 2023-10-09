@@ -15,7 +15,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Générer 5 clients fictifs et les insérer dans la base de données
-for _ in range(5):
+for _ in range(100):
     new_client = Client(
         nom_complet=fake.name(),
         email=fake.email(),
@@ -32,7 +32,7 @@ session.commit()
 clients = session.query(Client).all()
 
 # Générer 5 contrats fictifs liés à des clients existants et les insérer dans la base de données
-for _ in range(5):
+for _ in range(100):
     client = random.choice(clients)
     new_contract = Contract(
         client_id=client.id,  # Utilisez l'ID du client existant
@@ -50,7 +50,7 @@ session.commit()
 contracts = session.query(Contract).all()
 
 # Générer 5 événements fictifs liés à des contrats existants et les insérer dans la base de données
-for _ in range(5):
+for _ in range(100):
     contract = random.choice(contracts)
     new_event = Event(
         contract_id=contract.identifiant_unique,  # Utilisez l'identifiant unique du contrat existant
