@@ -1,4 +1,32 @@
 from controllers.controller import CRMController, CustomGroupController, CustomUserController
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+import json
+
+def lire_configuration():
+    with open('config.json', 'r') as fichier_config:
+        config = json.load(fichier_config)
+    return config
+
+config = lire_configuration()
+dsn_sentry = config.get('dsn')
+
+# Initialisation de Sentry
+sentry_sdk.init(
+    dsn=dsn_sentry,
+    integrations=[FlaskIntegration()],
+    traces_sample_rate=1.0
+)
+
+# ... Votre code existant ...
+
+# Partie du code où vous voulez capturer les exceptions
+try:
+    # Votre code ici
+    pass  # C'est ici que vous devriez mettre votre code à surveiller
+except Exception as e:
+    sentry_sdk.capture_exception(e)
+
 
 def main():
     # Instanciez les contrôleurs

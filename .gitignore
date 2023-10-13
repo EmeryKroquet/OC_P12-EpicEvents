@@ -8,5 +8,6 @@ venv
 config.cfg
 .vscode
 .DS_Store
+config.json
 sql-commande.txt
 __pycache__
