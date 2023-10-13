@@ -1,9 +1,10 @@
-# Point d'entrée principal de l'application
-from controllers.controller import CRMController
+from controllers.controller import CRMController, CustomGroupController, CustomUserController
 
 def main():
-    # Instanciez le contrôleur
-    controller = CRMController()
+    # Instanciez les contrôleurs
+    crm_controller = CRMController()
+    custom_group_controller = CustomGroupController()
+    custom_user_controller = CustomUserController()
 
     while True:
         print("\n================================================")
@@ -12,7 +13,9 @@ def main():
         print("1. Gérer les clients")
         print("2. Gérer les contrats")
         print("3. Gérer les événements")
-        print("4. Quitter")
+        print("4. Gérer les groupes personnalisés")
+        print("5. Gérer les utilisateurs personnalisés")
+        print("6. Quitter")
 
         choix = input("Veuillez entrer le numéro de l'option que vous souhaitez choisir : ")
 
@@ -33,18 +36,18 @@ def main():
                     telephone = input("Téléphone du client : ")
                     nom_entreprise = input("Nom de l'entreprise : ")
                     contact_commercial = input("Nom du contact commercial : ")
-                    controller.add_client(nom_complet, email, telephone, nom_entreprise, contact_commercial)
+                    crm_controller.add_client(nom_complet, email, telephone, nom_entreprise, contact_commercial)
                 elif choix_client == "2":
-                    clients = controller.get_all_clients()
+                    clients = crm_controller.get_all_clients()
                     for client in clients:
                         print(f"ID: {client.id}, Nom: {client.nom_complet}, Email: {client.email}")
                 elif choix_client == "3":
                     client_id = int(input("ID du client : "))
                     new_email = input("Nouvel email : ")
-                    controller.update_client_email(client_id, new_email)
+                    crm_controller.update_client_email(client_id, new_email)
                 elif choix_client == "4":
                     client_id = int(input("ID du client : "))
-                    controller.delete_client(client_id)
+                    crm_controller.delete_client(client_id)
                 elif choix_client == "5":
                     break
                 else:
@@ -64,16 +67,11 @@ def main():
                     montant_total = float(input("Montant total du contrat : "))
                     montant_restant = float(input("Montant restant à payer : "))
                     statut_contrat = int(input("Statut du contrat (1 pour actif, 0 pour inactif) : "))
-                    controller.add_contract(client_id, contact_commercial, montant_total, montant_restant,
-                                            statut_contrat)
+                    crm_controller.add_contract(client_id, contact_commercial, montant_total, montant_restant, statut_contrat)
                 elif choix_contrat == "2":
-                    contracts = controller.get_all_contracts()
+                    contracts = crm_controller.get_all_contracts()
                     for contract in contracts:
-                        print(
-                            f"ID: {contract.identifiant_unique},"
-                            f" Client ID: {contract.client_id},"
-                            f" Montant Total: {contract.montant_total},"
-                            f" Statut: {contract.statut_contrat}")
+                        print(f"ID: {contract.identifiant_unique}, Client ID: {contract.client_id}, Montant Total: {contract.montant_total}, Statut: {contract.statut_contrat}")
                 elif choix_contrat == "3":
                     break
                 else:
@@ -97,28 +95,74 @@ def main():
                     location = input("Lieu de l'événement : ")
                     attendees = int(input("Nombre de participants : "))
                     notes = input("Notes sur l'événement : ")
-                    controller.add_event(contract_id, client_name, client_contact, event_date_start, event_date_end,
-                                         support_contact, location, attendees, notes)
+                    crm_controller.add_event(contract_id, client_name, client_contact, event_date_start, event_date_end, support_contact, location, attendees, notes)
                 elif choix_evenement == "2":
                     contract_id = int(input("ID du contrat : "))
-                    events = controller.get_events_by_contract(contract_id)
+                    events = crm_controller.get_events_by_contract(contract_id)
                     for event in events:
-                        print(
-                            f"ID: {event.event_id},"
-                            f" Client: {event.client_name},"
-                            f" Début: {event.event_date_start},"
-                            f" Fin: {event.event_date_end},"
-                            f" Lieu: {event.location}")
+                        print(f"ID: {event.event_id}, Client: {event.client_name}, Début: {event.event_date_start}, Fin: {event.event_date_end}, Lieu: {event.location}")
                 elif choix_evenement == "3":
                     break
                 else:
                     print("Option invalide. Veuillez choisir une option valide.")
+
         elif choix == "4":
-            print("Merci d'avoir utilisé votre CRM. Au revoir !")
-            break
-        else:
-            print("Option invalide. Veuillez choisir une option valide.")
+            # Menu de gestion des groupes personnalisés
+            while True:
+                print("1. Ajouter un groupe personnalisé")
+                print("2. Afficher tous les groupes personnalisés")
+                print("3. Supprimer un groupe personnalisé")
+                print("4. Retour")
 
+                choix_groupe = input("Veuillez entrer le numéro de l'option que vous souhaitez choisir : ")
 
+                if choix_groupe == "1":
+                    nom_groupe = input("Nom du groupe personnalisé : ")
+                    custom_group_controller.add_custom_group(nom_groupe)
+                elif choix_groupe == "2":
+                    groupes = custom_group_controller.get_all_custom_groups()
+                    for groupe in groupes:
+                        print(f"ID: {groupe.id}, Nom: {groupe.name}")
+                elif choix_groupe == "3":
+                    groupe_id = int(input("ID du groupe personnalisé : "))
+                    custom_group_controller.delete_custom_group(groupe_id)
+                elif choix_groupe == "4":
+                    break
+                else:
+                    print("Option invalide. Veuillez choisir une option valide.")
+
+        elif choix == "5":
+            # Menu de gestion des utilisateurs personnalisés
+            while True:
+                print("1. Ajouter un utilisateur personnalisé")
+                print("2. Afficher tous les utilisateurs personnalisés")
+                print("3. Supprimer un utilisateur personnalisé")
+                print("4. Retour")
+
+                choix_utilisateur = input("Veuillez entrer le numéro de l'option que vous souhaitez choisir : ")
+
+                if choix_utilisateur == "1":
+                    username = input("Nom d'utilisateur : ")
+                    first_name = input("Prénom : ")
+                    last_name = input("Nom : ")
+                    email = input("Adresse e-mail : ")
+                    password = input("Mot de passe : ")
+                    is_staff = int(input("Est un membre du personnel (1 pour vrai, 0 pour faux) : "))
+                    is_active = int(input("Est actif (1 pour vrai, 0 pour faux) : "))
+                    department = input("Département : ")
+                    custom_user_controller.add_custom_user(username, first_name, last_name, email, password,
+                                                           is_staff, is_active, department)
+                elif choix_utilisateur == "2":
+                    utilisateurs = custom_user_controller.get_all_custom_users()
+                    for utilisateur in utilisateurs:
+                        print(
+                            f"ID: {utilisateur.id}, Nom d'utilisateur: {utilisateur.username}, Email: {utilisateur.email}")
+                elif choix_utilisateur == "3":
+                    utilisateur_id = int(input("ID de l'utilisateur personnalisé : "))
+                    custom_user_controller.delete_custom_user(utilisateur_id)
+                elif choix_utilisateur == "4":
+                    break
+                else:
+                    print("Option invalide. Veuillez choisir une option valide.")
 if __name__ == "__main__":
     main()

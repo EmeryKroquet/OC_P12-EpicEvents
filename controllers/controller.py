@@ -1,42 +1,61 @@
-from database import session
-#from sqlalchemy.orm import session
-from models.model import Client, Contract, Event
+from database import engine, session
+from sqlalchemy.orm import sessionmaker
+from models.model import Client, Contract, Event, CustomGroup, CustomUser
 
 class CRMController:
     def __init__(self):
-        self.session = session
+        self.Session = sessionmaker(bind=engine)
 
     def add_client(self, nom_complet, email, telephone, nom_entreprise, contact_commercial):
-        new_client = Client(nom_complet=nom_complet, email=email, telephone=telephone,
-                            nom_entreprise=nom_entreprise, contact_commercial=contact_commercial)
-        self.session.add(new_client)  # Utilisez la session importée pour ajouter un client
-        self.session.commit()  # Committez les modifications pour les enregistrer dans la base de données
+        session = self.Session()
+        new_client = Client(
+            nom_complet=nom_complet,
+            email=email,
+            telephone=telephone,
+            nom_entreprise=nom_entreprise,
+            contact_commercial=contact_commercial
+        )
+        session.add(new_client)
+        session.commit()
+        session.close()
         print("Client ajouté avec succès.")
 
     def get_all_clients(self):
-        return self.session.query(Client).all()
+        session = self.Session()
+        clients = session.query(Client).all()
+        session.close()
+        return clients
 
     def search_client_by_name(self, nom):
-        return (
-            self.session.query(Client)
-            .filter(Client.nom_complet.like(f'%{nom}%'))
-            .all()
-        )
+        session = self.Session()
+        clients = session.query(Client).filter(Client.nom_complet.like(f'%{nom}%')).all()
+        session.close()
+        return clients
+
+    # Autres méthodes du contrôleur
 
     def update_client_email(self, client_id, new_email):
-        if client := self.session.query(Client).filter_by(id=client_id).first():
+        session = self.Session()
+        client = session.query(Client).filter_by(id=client_id).first()
+        if client:
             client.email = new_email
-            self.session.commit()
+            session.commit()
+            session.close()
             print("Email du client mis à jour avec succès.")
         else:
+            session.close()
             print("Client non trouvé.")
 
     def delete_client(self, client_id):
-        if client := self.session.query(Client).filter_by(id=client_id).first():
-            self.session.delete(client)
-            self.session.commit()
+        session = self.Session()
+        client = session.query(Client).filter_by(id=client_id).first()
+        if client:
+            session.delete(client)
+            session.commit()
+            session.close()
             print("Client supprimé avec succès.")
         else:
+            session.close()
             print("Client non trouvé.")
 
     def add_contract(self, client_id, contact_commercial, montant_total, montant_restant, statut_contrat):
@@ -97,6 +116,137 @@ class CRMController:
             session.commit()
         else:
             print("Événement introuvable.")
-# Exemple d'utilisation du contrôleur
-controller = CRMController()
+
+    # ...
+
+class CustomUserController:
+    def __init__(self):
+        self.Session = sessionmaker(bind=engine)
+
+    def add_custom_user(self, username, first_name, last_name, email, password, is_staff, is_active, department):
+        session = self.Session()
+        try:
+            new_user = CustomUser(username=username, first_name=first_name, last_name=last_name, email=email,
+                                  password=password, is_staff=is_staff, is_active=is_active, department=department)
+            session.add(new_user)
+            session.commit()
+            print("Utilisateur personnalisé ajouté avec succès.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de l'ajout de l'utilisateur personnalisé : {str(e)}")
+        finally:
+            session.close()
+
+    def get_all_custom_users(self):
+        session = self.Session()
+        users = session.query(CustomUser).all()
+        session.close()
+        return users
+
+    def get_custom_user_by_id(self, user_id):
+        session = self.Session()
+        user = session.query(CustomUser).filter_by(id=user_id).first()
+        session.close()
+        return user
+
+    def update_custom_user(self, user_id, username, first_name, last_name, email, password, is_staff, is_active, department):
+        session = self.Session()
+        try:
+            user = session.query(CustomUser).filter_by(id=user_id).first()
+            if user:
+                user.username = username
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.password = password
+                user.is_staff = is_staff
+                user.is_active = is_active
+                user.department = department
+                session.commit()
+                print("Utilisateur personnalisé mis à jour avec succès.")
+            else:
+                print("Utilisateur personnalisé non trouvé.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de la mise à jour de l'utilisateur personnalisé : {str(e)}")
+        finally:
+            session.close()
+
+    def delete_custom_user(self, user_id):
+        session = self.Session()
+        try:
+            user = session.query(CustomUser).filter_by(id=user_id).first()
+            if user:
+                session.delete(user)
+                session.commit()
+                print("Utilisateur personnalisé supprimé avec succès.")
+            else:
+                print("Utilisateur personnalisé non trouvé.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de la suppression de l'utilisateur personnalisé : {str(e)}")
+        finally:
+            session.close()
+
+class CustomGroupController:
+
+    def __init__(self):
+        self.Session = sessionmaker(bind=engine)
+
+    def add_custom_group(self, name):
+        session = self.Session()
+        try:
+            new_group = CustomGroup(name=name)
+            session.add(new_group)
+            session.commit()
+            print("Groupe personnalisé ajouté avec succès.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de l'ajout du groupe personnalisé : {str(e)}")
+        finally:
+            session.close()
+
+    def get_all_custom_groups(self):
+        session = self.Session()
+        groups = session.query(CustomGroup).all()
+        session.close()
+        return groups
+
+    def get_custom_group_by_id(self, group_id):
+        session = self.Session()
+        group = session.query(CustomGroup).filter_by(id=group_id).first()
+        session.close()
+        return group
+
+    def update_custom_group(self, group_id, name):
+        session = self.Session()
+        try:
+            group = session.query(CustomGroup).filter_by(id=group_id).first()
+            if group:
+                group.name = name
+                session.commit()
+                print("Groupe personnalisé mis à jour avec succès.")
+            else:
+                print("Groupe personnalisé non trouvé.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de la mise à jour du groupe personnalisé : {str(e)}")
+        finally:
+            session.close()
+
+    def delete_custom_group(self, group_id):
+        session = self.Session()
+        try:
+            group = session.query(CustomGroup).filter_by(id=group_id).first()
+            if group:
+                session.delete(group)
+                session.commit()
+                print("Groupe personnalisé supprimé avec succès.")
+            else:
+                print("Groupe personnalisé non trouvé.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erreur lors de la suppression du groupe personnalisé : {str(e)}")
+        finally:
+            session.close()
 
