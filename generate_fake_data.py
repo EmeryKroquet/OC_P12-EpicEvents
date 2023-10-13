@@ -2,13 +2,15 @@ from faker import Faker
 import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+from database import database_user, database_password, database_host, database_name
 # Assurez-vous d'importer correctement les modèles depuis le module models
 from models.model import Client, Contract, Event, CustomUser, CustomGroup
 
 fake = Faker()
 
 # Créez une instance de votre moteur de base de données
-database_url = 'mysql+pymysql://root:root123@localhost/epicevent'
+database_url = f'mysql+pymysql://{database_user}:{database_password}@{database_host}/{database_name}'
 engine = create_engine(database_url)
 
 # Créez une session

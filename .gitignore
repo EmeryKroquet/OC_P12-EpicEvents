@@ -5,5 +5,8 @@ lib
 .envrc
 venv
 .idea
+config.cfg
+.vscode
+.DS_Store
 sql-commande.txt
 __pycache__

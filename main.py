@@ -67,11 +67,17 @@ def main():
                     montant_total = float(input("Montant total du contrat : "))
                     montant_restant = float(input("Montant restant à payer : "))
                     statut_contrat = int(input("Statut du contrat (1 pour actif, 0 pour inactif) : "))
-                    crm_controller.add_contract(client_id, contact_commercial, montant_total, montant_restant, statut_contrat)
+                    crm_controller.add_contract(client_id, contact_commercial,
+                                                montant_total, montant_restant,
+                                                statut_contrat
+                                                )
                 elif choix_contrat == "2":
                     contracts = crm_controller.get_all_contracts()
                     for contract in contracts:
-                        print(f"ID: {contract.identifiant_unique}, Client ID: {contract.client_id}, Montant Total: {contract.montant_total}, Statut: {contract.statut_contrat}")
+                        print(f"ID: {contract.identifiant_unique},"
+                              f" Client ID: {contract.client_id},"
+                              f" Montant Total: {contract.montant_total},"
+                              f" Statut: {contract.statut_contrat}")
                 elif choix_contrat == "3":
                     break
                 else:
@@ -95,12 +101,19 @@ def main():
                     location = input("Lieu de l'événement : ")
                     attendees = int(input("Nombre de participants : "))
                     notes = input("Notes sur l'événement : ")
-                    crm_controller.add_event(contract_id, client_name, client_contact, event_date_start, event_date_end, support_contact, location, attendees, notes)
+                    crm_controller.add_event(contract_id, client_name, client_contact,
+                                             event_date_start, event_date_end,
+                                             support_contact, location, attendees, notes
+                                             )
                 elif choix_evenement == "2":
                     contract_id = int(input("ID du contrat : "))
                     events = crm_controller.get_events_by_contract(contract_id)
                     for event in events:
-                        print(f"ID: {event.event_id}, Client: {event.client_name}, Début: {event.event_date_start}, Fin: {event.event_date_end}, Lieu: {event.location}")
+                        print(f"ID: {event.event_id},"
+                              f" Client: {event.client_name},"
+                              f" Début: {event.event_date_start},"
+                              f" Fin: {event.event_date_end},"
+                              f" Lieu: {event.location}")
                 elif choix_evenement == "3":
                     break
                 else:
@@ -156,7 +169,9 @@ def main():
                     utilisateurs = custom_user_controller.get_all_custom_users()
                     for utilisateur in utilisateurs:
                         print(
-                            f"ID: {utilisateur.id}, Nom d'utilisateur: {utilisateur.username}, Email: {utilisateur.email}")
+                            f"ID: {utilisateur.id},"
+                            f" Nom d'utilisateur: {utilisateur.username},"
+                            f" Email: {utilisateur.email}")
                 elif choix_utilisateur == "3":
                     utilisateur_id = int(input("ID de l'utilisateur personnalisé : "))
                     custom_user_controller.delete_custom_user(utilisateur_id)
@@ -164,5 +179,10 @@ def main():
                     break
                 else:
                     print("Option invalide. Veuillez choisir une option valide.")
+        elif choix == "6":
+            print("Merci d'avoir utilisé votre CRM. Au revoir !")
+            break
+        else:
+            print("Option invalide. Veuillez choisir une option valide.")
 if __name__ == "__main__":
     main()
