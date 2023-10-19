@@ -31,16 +31,27 @@ Pour installer Epicevent sur votre système local, suivez ces étapes :
 
 ```bash
 git clone https://github.com/EmeryKroquet/OC_P12-EpicEvents.git
-cd OC_P12-EpicEvents
 ```
+
+## Se placer dans le repertoire du projet:
+````bash cd OC_P12-EpicEvents````
 
 ## Créez et activez votre environnement virtuel (venv) :
 ```bash
 python -m venv venv
+```
+
+## Activer l'environnement virtuel du projet :
+```bash
 source venv/bin/activate  # Sur Windows, utilisez venv\Scripts\activate
 ```
-## Installez les dépendances nécessaires :
 
+## Désactiver l'environnement :
+```bash
+deactivate 
+```
+
+## Installez les dépendances nécessaires :
 ```bash
 pip install -r requirements.txt
 ```
@@ -48,8 +59,8 @@ pip install -r requirements.txt
 ## Créez le fichier de configuration :
 Créez un fichier .env à la racine du projet et ajoutez les variables d'environnement nécessaires :
 
+## Créer une session de connexion de la base de données :
 ```bash
-SECRET_KEY=VotreClefSecrete
 DATABASE_URL=mysql+pymysql://utilisateur:motdepasse@localhost/nom_de_la_base_de_donnees
 ```
 
