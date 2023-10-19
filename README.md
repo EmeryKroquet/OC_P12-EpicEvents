@@ -12,8 +12,8 @@ Epicevent est une application de gestion d'événements qui permet aux utilisate
 Gestion des Clients: Ajoutez, mettez à jour et supprimez les détails des clients, y compris les informations de contact et les détails de l'entreprise.
 Gestion des Contrats: Créez des contrats liés à des clients, spécifiez les détails financiers et suivez les paiements.
 Gestion des Événements: Planifiez des événements, spécifiez les détails tels que la date, l'emplacement et le nombre d'invités, et ajoutez des notes pertinentes.
-Suivi des Participants: Gardez une trace du nombre d'invités et des présences pour chaque événement.
-Interface Utilisateur Conviviale: Une interface utilisateur intuitive et conviviale pour faciliter la navigation et l'utilisation de l'application.
+Suivi des Participants : Gardez une trace du nombre d'invités et des présences pour chaque événement.
+Interface Utilisateur Conviviale : Une interface utilisateur intuitive et conviviale pour faciliter la navigation et l'utilisation de l'application.
 
 ## Table des matières
 
@@ -23,9 +23,16 @@ Interface Utilisateur Conviviale: Une interface utilisateur intuitive et convivi
 - [Requirements](#reqs)
 - [Architecture](#architecture)
 - [Configuration locale](#localconfig)
-- [Documentation](#docs)
-- 
-Pour installer Epicevent sur votre système local, suivez ces étapes :
+
+## Architecture
+
+<h3 align="center">
+    <img alt="Logo" title="#logo" src="img.png">
+    <br>
+</h3>
+
+
+# Pour installer Epicevent sur votre système local, suivez ces étapes :
 
 ## Clonez le repository depuis GitHub :
 
@@ -71,7 +78,20 @@ python manage.py db migrate
 python manage.py db upgrade
 ```
 
+## Générer un fake data pour la base de données  avec Faker en exécutant :
+```bash
+python -m generate_fake_data
+````
+ou 
+```bash
+python3 generate_fake_data.py
+````
+
 ## Exécutez l'application :
 ```bash
 python -m main
+````
+ou
+```bash
+python3 main.py
 ````
