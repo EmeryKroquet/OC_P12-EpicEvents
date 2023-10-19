@@ -2,6 +2,7 @@ from database import engine, session
 from sqlalchemy.orm import sessionmaker
 from models.model import Client, Contract, Event, CustomGroup, CustomUser
 
+
 class CRMController:
     def __init__(self):
         self.Session = sessionmaker(bind=engine)
@@ -65,7 +66,6 @@ class CRMController:
         self.session.add(new_contract)
         self.session.commit()
 
-
     def get_all_contracts(self):
         return session.query(Contract).all()
 
@@ -74,9 +74,9 @@ class CRMController:
 
     def update_contract_amounts(self, contract_id, new_total_amount, new_remaining_amount):
         if (
-            contract := session.query(Contract)
-            .filter_by(identifiant_unique=contract_id)
-            .first()
+                contract := session.query(Contract)
+                        .filter_by(identifiant_unique=contract_id)
+                        .first()
         ):
             contract.montant_total = new_total_amount
             contract.montant_restant_a_payer = new_remaining_amount
@@ -84,9 +84,9 @@ class CRMController:
 
     def delete_contract(self, contract_id):
         if (
-            contract := session.query(Contract)
-            .filter_by(identifiant_unique=contract_id)
-            .first()
+                contract := session.query(Contract)
+                        .filter_by(identifiant_unique=contract_id)
+                        .first()
         ):
             session.delete(contract)
             session.commit()
@@ -119,6 +119,7 @@ class CRMController:
 
     # ...
 
+
 class CustomUserController:
     def __init__(self):
         self.Session = sessionmaker(bind=engine)
@@ -149,7 +150,8 @@ class CustomUserController:
         session.close()
         return user
 
-    def update_custom_user(self, user_id, username, first_name, last_name, email, password, is_staff, is_active, department):
+    def update_custom_user(self, user_id, username, first_name, last_name, email, password, is_staff, is_active,
+                           department):
         session = self.Session()
         try:
             user = session.query(CustomUser).filter_by(id=user_id).first()
@@ -187,6 +189,7 @@ class CustomUserController:
             print(f"Erreur lors de la suppression de l'utilisateur personnalisé : {str(e)}")
         finally:
             session.close()
+
 
 class CustomGroupController:
 
@@ -249,4 +252,3 @@ class CustomGroupController:
             print(f"Erreur lors de la suppression du groupe personnalisé : {str(e)}")
         finally:
             session.close()
-

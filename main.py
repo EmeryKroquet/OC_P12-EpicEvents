@@ -32,7 +32,7 @@ def main():
     crm_controller = CRMController()
     custom_group_controller = CustomGroupController()
     custom_user_controller = CustomUserController()
-
+    result = division_by_zero = 1 / 0
     while True:
         print("\n================================================")
         print("Bienvenue dans notre application CRM")
@@ -108,9 +108,9 @@ def main():
                         contracts = crm_controller.get_all_contracts()
                         for contract in contracts:
                             print(f"ID: {contract.identifiant_unique},"
-                                f" Client ID: {contract.client_id},"
-                                f" Montant Total: {contract.montant_total},"
-                                f" Statut: {contract.statut_contrat}")
+                                  f" Client ID: {contract.client_id},"
+                                  f" Montant Total: {contract.montant_total},"
+                                  f" Statut: {contract.statut_contrat}")
                     elif choix_contrat == "3":
                         break
                     else:
@@ -141,17 +141,17 @@ def main():
                         notes = input("Notes sur l'événement : ")
                         crm_controller.add_event(contract_id, client_name, client_contact,
                                                  event_date_start, event_date_end,
-                                                support_contact, location, attendees, notes
-                                             )
+                                                 support_contact, location, attendees, notes
+                                                 )
                     elif choix_evenement == "2":
                         contract_id = int(input("ID du contrat : "))
                         events = crm_controller.get_events_by_contract(contract_id)
                         for event in events:
                             print(f"ID: {event.event_id},"
-                                f" Client: {event.client_name},"
-                                f" Début: {event.event_date_start},"
-                                f" Fin: {event.event_date_end},"
-                                f" Lieu: {event.location}")
+                                  f" Client: {event.client_name},"
+                                  f" Début: {event.event_date_start},"
+                                  f" Fin: {event.event_date_end},"
+                                  f" Lieu: {event.location}")
                     elif choix_evenement == "3":
                         break
                     else:
@@ -210,7 +210,7 @@ def main():
                         is_active = int(input("Est actif (1 pour vrai, 0 pour faux) : "))
                         department = input("Département : ")
                         custom_user_controller.add_custom_user(username, first_name, last_name, email, password,
-                                                            is_staff, is_active, department)
+                                                               is_staff, is_active, department)
                     elif choix_utilisateur == "2":
                         utilisateurs = custom_user_controller.get_all_custom_users()
                         for utilisateur in utilisateurs:
