@@ -103,11 +103,13 @@ class Event(Base):
                 f"  attendees={self.attendees},"
                 f" notes='{self.notes}')")
 
+
 class CustomGroup(Base):
     __tablename__ = 'custom_group'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(150), nullable=False, unique=True)
+
 
 class CustomUser(Base):
     __tablename__ = 'custom_users'
@@ -125,6 +127,7 @@ class CustomUser(Base):
     """
     def __repr__(self):
         return f"<CustomUser(username='{self.username}', email='{self.email}')>" """
+
     def __str__(self):
         return (f"CustomUser(id={self.id}, username='{self.username}',"
                 f" first_name='{self.first_name}', last_name='{self.last_name}',"
