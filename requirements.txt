@@ -4,4 +4,16 @@ PyMySQL==1.1.0
 python-dateutil==2.8.2
 six==1.16.0
 SQLAlchemy==2.0.21
-typing_extensions==4.8.0
+pip~=23.2.1
+configparser~=6.0.0
+attrs~=21.4.0
+wheel~=0.38.4
+cryptography~=37.0.4
+Jinja2~=3.1.2
+pytest~=7.4.1
+psutil~=5.9.1
+setuptools~=65.5.1
+packaging~=21.3
+pyparsing~=3.0.9
+psycopg2~=2.9.8
+flask~=2.3.3

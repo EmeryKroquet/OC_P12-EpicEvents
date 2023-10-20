@@ -1,4 +1,4 @@
-from controllers.controller import CRMController, CustomGroupController, CustomUserController
+from controllers.controller import CustomGroupController, CustomUserController, CRMController
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 import json
@@ -7,6 +7,7 @@ import json
 def lire_configuration():
     with open('config.json', 'r') as fichier_config:
         config = json.load(fichier_config)
+        result = division_by_zero = 1 / 0
     return config
 
 
@@ -20,22 +21,16 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-# Partie du code où pour capturer les exceptions
-try:
-    pass
-except Exception as e:
-    sentry_sdk.capture_exception(e)
-
 
 def main():
     # Instanciez les contrôleurs
     crm_controller = CRMController()
     custom_group_controller = CustomGroupController()
     custom_user_controller = CustomUserController()
-    result = division_by_zero = 1 / 0
+    # result = division_by_zero = 1 / 0
     while True:
         print("\n================================================")
-        print("Bienvenue dans notre application CRM")
+        print("     Bienvenue dans notre application CRM")
         print("\n================================================")
         print("1. Gérer les clients")
         print("2. Gérer les contrats")
@@ -236,5 +231,26 @@ def main():
             print("Option invalide. Veuillez choisir une option valide.")
 
 
+# Générez une erreur délibérée pour tester l'intégration avec Sentry
+def generate_error():
+    result = 1 / 0  # Cela générera une division par zéro exception
+    return result
+
+
+# Initialisation de Sentry avec votre DSN
+def initialiser_sentry(dsn):
+    sentry_sdk.init(dsn=dsn, integrations=[FlaskIntegration()])
+
+
+# Lire la configuration et obtenir le DSN
+config = lire_configuration()
+dsn_sentry = config.get('dsn')
+
+# Initialiser Sentry avec le DSN
+initialiser_sentry(dsn_sentry)
+
 if __name__ == "__main__":
     main()
+
+    # Appelez la fonction generate_error() à la fin du script pour générer une erreur délibérée
+    generate_error()
